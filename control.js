@@ -1,30 +1,20 @@
-const form = document.getElementById('formulario');
+const user = document.getElementById('usuario');
+const password = document.getElementById('clave');
+const btn = document.getElementById('boton');
 
-document.addEventListener("DOMContentLoaded", function () {
-    form.addEventListener('submit', validarFormulario);
-});
-
-function validarFormulario(evento) {
-    evento.preventDefault();
-    const user = document.getElementById('usuario');
+const validarCampos = (user, password) => {
+    user.setCustomValidity('')
+    password.setCustomValidity('')
     if(user.value === "") {
-        alert('Debe ingresar un usuario');
-        user.focus();
-        return;
+       user.setCustomValidity('Este campo no puede estar vacío');
+    } else if (user.value.indexOf('@') == -1) {
+        user.setCustomValidity('El campo debe contener un @');
     }
-    const userVálido = user => {
-        return /\S+@\S+/.test(user);
+    else if(password.value === "") {
+        password.setCustomValidity('Complete este campo');
     }
-    if(!userVálido(user.value)) {
-        alert('Debe incluir un @');
-        user.focus();
-        return;
-    }
-    const password = document.getElementById('clave');
-    if(password.value < 4) {
-        alert('Debe ingresar al menos 4 caracteres');
-        password.focus();
-        return;
-    }
-    this.submit();
 }
+
+btn.addEventListener('click', (e) => {
+    validarCampos(user, password);
+})
